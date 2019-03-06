@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gcc src/main.c -o bin/phq
+gcc src/main.c src/compiler.c -o bin/phq

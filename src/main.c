@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "compiler.h"
 
 int main(int argc, char *argv[]) {
     /* highest quality argument parsing */
