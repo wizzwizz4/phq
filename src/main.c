@@ -33,7 +33,14 @@ int main(int argc, char *argv[]) {
                         switch (argv[argi][2]) {
                             case '\0':
                             opt_help:
-                                printf("useful help\n");
+                                printf("Welcome to the PHQ help document!\n"
+                                       "PHQ is 1 (one) better than PHP.\n"
+                                       "\n"
+                                       "Syntax:\n"
+                                       "  %s --help\n"
+                                       "  %s -?      displays this document\n"
+                                       "That is all.\n",
+                                       argv[0], argv[0]);
                                 break;
                         }
                 }
