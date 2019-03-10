@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "compiler.h"
 
 int main(int argc, char *argv[]) {
@@ -9,6 +10,51 @@ int main(int argc, char *argv[]) {
                 switch (argv[argi][1]) {
                     case '-':
                         switch (argv[argi][2]) {
+                            case 'c':
+                                switch (argv[argi][3]) {
+                                    case 'o':
+                                        switch (argv[argi][4]) {
+                                            case 'm':
+                                                switch (argv[argi][5]) {
+                                                    case 'p':
+                                                        switch (argv[argi]
+                                                                [6]) {
+                                                            case 'i':
+switch (argv[argi][7]) {
+    case 'l':
+        switch (argv[argi][8]) {
+            case 'e':
+                switch (argv[argi][9]) {
+                    case '=': {
+                        size_t size = 1;
+                        char *buffer = NULL;
+                        register size_t no_read;
+                        do {
+                            buffer = realloc(buffer, size<<=1);
+                            FILE *restrict f = fopen(argv[argi]+10, "r");
+                            no_read = fread(buffer, sizeof(char), size, f);
+                        } while (no_read == size);
+                        buffer[no_read] = '\0';
+                        char * const compiled = compile(buffer);
+                        printf("%s", compiled);
+                        free(compiled);
+                        free(buffer);
+                        break;
+                    }
+                }
+                break;
+        }
+        break;
+}
+break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
                             case 'h':
                                 switch (argv[argi][3]) {
                                     case 'e':

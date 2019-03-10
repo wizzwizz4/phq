@@ -1,0 +1,9 @@
+function{$arg1;$arg2;}
+}
+
+This program defines a function that takes two arguments and does nothing.
+That is, if I don't decide to change PHQ's syntax before this is implemented.
+Potential alternatives include:
+
+function{($arg1,$arg2)}
+function{"arg1""arg2"}
