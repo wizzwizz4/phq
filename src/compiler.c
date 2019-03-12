@@ -2,35 +2,35 @@
 #include <stddef.h>
 #include "opcodes.h"
 
-char * compile_compile(const char **source,
-                       char *compiled, size_t *offset);
+char * compile_compile(const char **restrict source,
+                       char *restrict compiled, size_t *restrict offset);
 
 char * compile(const char *source) {
     size_t offset = 0;
     return compile_compile(&source, NULL, &offset);
 }
 
-char * compile_compile(const char **source,
-                       char *compiled, size_t *offset) {
+char * compile_compile(const char **restrict source,
+                       char *restrict compiled, size_t *restrict offset) {
     /* deal with NULL */
     compiled = realloc(compiled - *offset, *offset);
 
     do {
-        switch (*source[0]) {
+        switch (0[*source]) {
             case 'f':
-                switch (*source[1]) {
+                switch (1[*source]) {
                     case 'u':
-                        switch (*source[2]) {
+                        switch (2[*source]) {
                             case 'n':
-                                switch (*source[3]) {
+                                switch (3[*source]) {
                                     case 'c':
-                                        switch (*source[4]) {
+                                        switch (4[*source]) {
                                             case 't':
-                                                switch (*source[5]) {
+                                                switch (5[*source]) {
                                                     case 'i':
-                                                        switch (*source[6]) {
+                                                        switch (6[*source]) {
                                                             case 'o':
-switch (*source[7]) {
+switch (7[*source]) {
     case 'n':
         *source += 7;
         compiled = realloc(compiled - *offset, ++*offset) + *offset;
