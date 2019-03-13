@@ -35,11 +35,11 @@ switch (7[*source]) {
         *source += 7;
         *offset += 1;
         compiled = (char *)realloc(compiled - *offset + 1, *offset) + *offset;
-        *compiled = FUNCTION_BLOCK;
+        compiled[-1] = FUNCTION_BLOCK;
         compiled = compile_compile(source, compiled, offset) + *offset;
         *offset += 1;
         compiled = (char *)realloc(compiled - *offset + 1, *offset) + *offset;
-        *compiled = END_BLOCK;
+        compiled[-1] = END_BLOCK;
         break;
 }
 break;
@@ -57,5 +57,7 @@ break;
                 break;
         }
     } while (*(++*source) && **source != '}');
+    compiled = (char *)realloc(compiled - *offset, *offset + 1) + *offset;
+    compiled[0] = '\0';
     return compiled - *offset;
 }
