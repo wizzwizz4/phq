@@ -4,6 +4,7 @@ enum opcode {
     STACK_POP,
     STACK_PUSH,
     FUNCTION_BLOCK,
-    END_BLOCK
+    END_BLOCK,
+    VNMTAB,
 };
 #endif
