@@ -13,7 +13,7 @@ char * compile(const char *source) {
 char * compile_compile(const char **restrict source,
                        char *restrict compiled, size_t *restrict offset) {
     /* deal with NULL */
-    compiled = realloc(compiled - *offset, *offset);
+    compiled = (char *)realloc(compiled - *offset, *offset) + *offset;
 
     do {
         switch (0[*source]) {
@@ -34,11 +34,11 @@ switch (7[*source]) {
     case 'n':
         *source += 7;
         *offset += 1;
-        compiled = realloc(compiled - *offset + 1, *offset) + *offset;
+        compiled = (char *)realloc(compiled - *offset + 1, *offset) + *offset;
         *compiled = FUNCTION_BLOCK;
-        compiled = compile_compile(source, compiled, offset);
+        compiled = compile_compile(source, compiled, offset) + *offset;
         *offset += 1;
-        compiled = realloc(compiled - *offset + 1, *offset) + *offset;
+        compiled = (char *)realloc(compiled - *offset + 1, *offset) + *offset;
         *compiled = END_BLOCK;
         break;
 }
