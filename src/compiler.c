@@ -88,12 +88,13 @@ char * compile_varname_table(const char *restrict *const restrict source,
     compiled[-1] = VNMTAB;
 
     size_t varname_count = 0;
-    const char **varname_list = NULL;
+    const char **restrict varname_list = NULL;
     do {
         switch (0[*source]) {
             case '$': {
-                const char *new_source = *source;
-                const char *new_varname = compile_varname(&new_source);
+                const char *restrict new_source = *source;
+                const char *restrict new_varname = \
+                    compile_varname(&new_source);
                 if (*new_source != ';') {
                     free((void *)new_varname);
                     goto _compiler_compile_varname_table_outer_loop_end;
@@ -110,6 +111,27 @@ char * compile_varname_table(const char *restrict *const restrict source,
         }
     } while (*++*source && **source != '}');
     _compiler_compile_varname_table_outer_loop_end:
+    do{}while(0);
+
+    size_t count = 1;
+    for (size_t i = 0; i < varname_count; i += 1)
+        for (size_t j = 1; varname_list[j]; j += 1)
+            count += 1;
+    struct internal_table_s {
+        size_t next_abs;
+        unsigned char varnum; /* 255 possible variables, exc. -1 */
+    };
+    struct internal_table_s internal_table[count][256];
+    for (size_t i = 0; i < count; i += 1) {
+        unsigned char j = 0;
+        do {
+            internal_table[i][j] = (struct internal_table_s){
+                .next_abs = 0,
+                .varnum = 0
+            };
+        } while (++j);
+    }
+    internal_table[0][0] = internal_table[0][1]; /* to make it compile */
 
     if (varname_count) {
         free((void *)varname_list[0]);
@@ -118,6 +140,7 @@ char * compile_varname_table(const char *restrict *const restrict source,
         }
     }
     free(varname_list);
+    varname_list = NULL;  /* compiler should optimise this away */
     return compiled - *offset;
 }
 
@@ -205,6 +228,7 @@ char * compile_varname(const char *restrict *const restrict source) {
                 buffer[buffer_index] = **source;
                 break;
             default:
+                buffer[buffer_index] = '\0';
                 goto _compiler_compile_varname_outer_loop_end;
         }
     } while (*++*source && **source != '}');
