@@ -86,16 +86,38 @@ char * compile_varname_table(const char *restrict *const restrict source,
                              size_t *restrict offset) {
     _pwi_offset_inc(1);
     compiled[-1] = VNMTAB;
+
+    size_t varname_count = 0;
+    const char **varname_list = NULL;
     do {
         switch (0[*source]) {
-            case '$':
-                compile_varname(source);
+            case '$': {
+                const char *new_source = *source;
+                const char *new_varname = compile_varname(&new_source);
+                if (*new_source != ';') {
+                    free((void *)new_varname);
+                    goto _compiler_compile_varname_table_outer_loop_end;
+                }
+                *source = new_source + 1; /* skip ; */
+                varname_count += 1;
+                varname_list = realloc(varname_list,
+                                       sizeof(*varname_list) * varname_count);
+                varname_list[varname_count - 1] = new_varname;
                 break;
+            }
             default:
                 goto _compiler_compile_varname_table_outer_loop_end;
         }
     } while (*++*source && **source != '}');
     _compiler_compile_varname_table_outer_loop_end:
+
+    if (varname_count) {
+        free((void *)varname_list[0]);
+        while (--varname_count) {
+            free((void *)varname_count[varname_list]);
+        }
+    }
+    free(varname_list);
     return compiled - *offset;
 }
 
