@@ -86,8 +86,10 @@ break;
                                        "Syntax:\n"
                                        "  %s --help\n"
                                        "  %s -?      displays this document\n"
+                                       "  %s --compile=filename\n"
+                                       "             compiles filename\n"
                                        "That is all.\n",
-                                       argv[0], argv[0]);
+                                       argv[0], argv[0], argv[0]);
                                 break;
                         }
                 }
